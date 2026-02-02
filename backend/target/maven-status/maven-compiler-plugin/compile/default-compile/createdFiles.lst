@@ -1,6 +1,0 @@
-com/bookfinder/config/SecurityConfig.class
-com/bookfinder/controller/HealthController.class
-com/bookfinder/controller/AuthController.class
-com/bookfinder/entity/User.class
-com/bookfinder/BookFinderApplication.class
-com/bookfinder/repository/UserRepository.class

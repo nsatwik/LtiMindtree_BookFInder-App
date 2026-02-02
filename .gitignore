@@ -1,16 +1,24 @@
-# Java
-target/
+# ===== Java / Spring Boot =====
+backend/target/
+*.jar
 *.log
 
-# Node
+# ===== Node / React =====
 node_modules/
-build/
+frontend/node_modules/
+frontend/build/
 
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.backup
+# ===== Environment files =====
+.env
+.env.*
+!.env.example
 
-# OS
+# ===== OS / IDE =====
 .DS_Store
+.idea/
+.vscode/
+*.iml
+
+# ===== Docker =====
+*.tar
 
