@@ -2,12 +2,14 @@ package com.bookfinder.controller;
 
 import com.bookfinder.entity.User;
 import com.bookfinder.repository.UserRepository;
+import com.bookfinder.security.JwtUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // TEMP
+@CrossOrigin(origins = "*") // TEMP – will restrict later
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -20,22 +22,28 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
+    public ResponseEntity<String> register(@RequestBody User user) {
+
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            return "User already exists";
+            return ResponseEntity.badRequest().body("User already exists");
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "User registered successfully";
+
+        return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody User user) {
+
         return userRepository.findByEmail(user.getEmail())
                 .filter(u -> encoder.matches(user.getPassword(), u.getPassword()))
-                .map(u -> "Login successful")
-                .orElse("Invalid credentials");
+                .map(u -> {
+                    String token = JwtUtil.generateToken(u.getEmail());
+                    return ResponseEntity.ok(token);
+                })
+                .orElse(ResponseEntity.status(401).body("Invalid credentials"));
     }
 }
 
