@@ -1,0 +1,16 @@
+# Java
+target/
+*.log
+
+# Node
+node_modules/
+build/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# OS
+.DS_Store
+
