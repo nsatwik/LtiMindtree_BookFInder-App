@@ -7,4 +7,9 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
